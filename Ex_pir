@@ -1,0 +1,232 @@
+//Получаем значения из полей
+function set_fields()
+{
+	var fields_array = ['v1','v2', 'v3','v4','v5', 'v6', 'v7', 'v8','v9', 'v10', 'v11', 'v12','v13', 'v14', 'v15', 'v20', 'v21', 'v22', 'v23', 'v24', 'v25', 'v26', 'v27', 'v28'];
+    var error = 0;
+    for(var field_key in fields_array)
+    {
+		var field_name = fields_array[field_key];
+        var field_html = $('#' + field_name);
+        var field_value = field_html.val();
+        eval('field = ' + field_name);
+	    if( (field_value < field.min || field_value > field.max) || isNaN(parseFloat(field_value)))
+        {
+            field_html.next().css( 'color', '#666' ).html('от ' + field.min + ' до ' + field.max);
+            error++;
+        }
+        else
+        {
+            eval(field_name + "['val'] = " + field_value);
+            field_html.next().css( 'color', 'green' ).html('допустимое значение');
+
+        }
+    }
+    return error == 0;
+}
+//Возвращает значение для указанной переменной
+function ask_value(f_obj){
+    
+    var message = 'Укажите ' + f_obj.label + ' ' + f_obj.min + ' до ' + f_obj.max;
+    var value = prompt(message);
+    
+    while(value < f_obj.min || value > f_obj.max )
+    {
+        value = prompt(message);
+    }
+    
+    return value; 
+}
+
+
+//Форматируем вывод
+function output_format(field)
+{
+	return field['label'] + ' = ' + field['val'] + field['ext'] + '<br>';
+}
+//Вывод сообщений
+//alert-error и alert-success
+function message(message, type){
+     $('#message').html('<div class="alert fade in '+ type +'"><button type="button" class="close" data-dismiss="alert">×</button>'+ message +'</div>');
+    
+}//Вывод результата
+//alert-success
+function result(message){
+	 $('#result').html('<div class="alert fade in alert-success"><button type="button" class="close" data-dismiss="alert">×</button>'+ message +'</div>');
+	
+}
+//вводимые значения
+var v1 = {name: 'v1', val: null, label: 'Коэффициент трения материала по стали', min: 0.16, max: 0.8, ext : ''};
+var v2 = {name: 'v2', val: null, label: 'Коэффициент бокового распора материала в стальном канале', min: 0.2, max: 0.6, ext : ''};
+var v3 = {name: 'v3', val: null, label: 'Период релаксации в стальном канале', min: 0.1, max: 6, ext : 'с'};
+var v4 = {name: 'v4', val: null, label: 'Адгезионное давление в стальном канале', min: 6.5, max: 45.5, ext : ' кПа '};
+var v5 = {name: 'v5', val: null, label: 'Остаточное давление в стальном канале', min: 0.4, max: 2.5, ext : ' МПа '};
+var v6 = {name: 'v6', val: null, label: 'Начальное давление прессования в стальном канале', min: 2, max: 10, ext : 'МПа'};
+var v7 = {name: 'v7', val: null, label: 'Диаметр канала матрицы', min: 2.5, max: 7, ext : 'мм'};
+var v8 = {name: 'v8', val: null, label: 'Скорость движения материала', min: 0.1, max: 1.5, ext : 'м/с'};
+var v9 = {name: 'v9', val: null, label: 'Время', min: 1, max: 20, ext : 'с'};
+var v10 = {name: 'v10', val: null, label: 'Адгезионное давление во фторопластовом канале', min: 1.08, max: 6.33, ext : ' кПа '};
+var v11 = {name: 'v11', val: null, label: 'Остаточное давление во фторопластовом канале', min: 0.5, max: 3.2, ext : ' МПа '};
+var v12 = {name: 'v12', val: null, label: 'Период релаксации во фторопластовом канале', min: 1.5, max: 10, ext : 'с'};
+var v13 = {name: 'v13', val: null, label: 'Начальное давление прессования во фторопластовом канале', min: 2, max: 10, ext : 'МПа'};
+var v14 = {name: 'v14', val: null, label: 'Коэффициент трения материала по фторопласту', min: 0.049, max: 0.387, ext : ''};
+var v15 = {name: 'v15', val: null, label: 'Коэффициент бокового распора материала во фторопластовом канале', min: 0.68, max: 0.94, ext : ''};
+var v20 = {name: 'v20', val: null, label: 'Потребляемая мощность', min: 0.85, max: 2.5, ext : 'кВт'};
+var v21 = {name: 'v21', val: null, label: 'Масса гранул', min: 0.004, max: 0.014, ext : 'кг'};
+var v22 = {name: 'v22', val: null, label: 'Время работы гранулятора', min: 3, max: 10, ext : 'мин'};
+var v23 = {name: 'v23', val: null, label: ' Относительная влажность сырого помета', min: 60, max: 98, ext : ' %'};
+var v24 = {name: 'v24', val: null, label: 'Относительная влажность сухого помета', min: 14, max: 70, ext : ' % '};
+var v25 = {name: 'v25', val: null, label: 'Рабочее давление в грануляторе', min: 2.5, max: 7.5, ext : 'МПа'};
+var v26 = {name: 'v26', val: null, label: 'Радиус матрицы гранулятора', min: 55, max: 110, ext : 'мм'};
+var v27 = {name: 'v27', val: null, label: 'Диаметр отверстий матрицы', min: 2.5, max: 7, ext : 'мм'};
+var v28 = {name: 'v28', val: null, label: 'Шаг отверстий матрицы', min: 5, max: 10, ext : 'мм'};
+
+// рассчитываемые значения
+var v16 = {name: 'v16', val: null, label: 'Осевое давление в стальном канале в момент времени P <sub>tc</sub>', ext : '  Па'};
+var v17 = {name: 'v17', val: null, label: 'Осевое давление во фторопластовом канале в момент времени P <sub>tф</sub>', ext : '  Па'};
+var v18 = {name: 'v18', val: null, label: 'Оптимальная длина стального канала  L <sub>c</sub>', ext : '  м'};
+var v19 = {name: 'v19', val: null, label: 'Оптимальная длина фторопластового канала  L <sub>ф</sub>', ext : '  м'};
+var v29 = {name: 'v29', val: null, label: 'Часовая производительность матрицы по сырому помету Q', ext : '  кг/мин'};
+var v30 = {name: 'v30', val: null, label: 'Энергоемкость процесса гранулирования Э', ext : '  кВт⋅ч/ед'};
+var v31 = {name: 'v31', val: null, label: 'Часовая производительность матрицы по сухому помету Q <sub>сух</sub>', ext : '  кг/мин'};
+var v32 = {name: 'v32', val: null, label: 'Минимальная толщина прессующего органа гранулятора h', ext : '  мм'};
+var v33 = {name: 'v33', val: null, label: 'Расчетный запас прочности стальной части гранулятора σ', ext : '  кг/мм <sup>2</sup>'};
+
+//НАЧАЛО РАСЧЕТОВ
+
+//ШАГ1
+function step2()//находим Осевое давление в стальном канале в момент времени t
+{
+    var result1 = v5['val'] * 1000000;
+    var result2 =-(v9['val'] / v3['val']);
+    var result3 = (1 - (Math.exp(result2)));
+    var result4 = v6['val'] * 1000000;
+    var result5 =-4 * (v1['val'] * v2['val'] * v8['val'] * v9['val']);
+    var result6 = result5 / (v7['val'] * 0.001);
+    var result7 = (result4 * (Math.exp(result6)));
+    var result8 = (v4['val'] * 1000) / v2['val'];
+    var result9 = ((Math.exp(result6)) - 1);
+    var result10 = (result4 * result7 + result8 * result9) * (Math.exp(result2));
+    var result11 = result1 * result3;
+    v16['val'] = result11 + result10;
+}
+
+//ШАГ2
+function step3()//находим Осевое давление во фторопластовом канале в момент времени t
+{
+    var result1 = v11['val'] * 1000000;
+    var result2 =-(v9['val'] / v12['val']);
+    var result3 = (1 - (Math.exp(result2)));
+    var result4 = v13['val'] * 1000000;
+    var result5 =-4 * (v14['val'] * v15['val'] * v8['val'] * v9['val']);
+    var result6 = result5 / (v7['val'] * 0.001);
+    var result7 = (result4 * (Math.exp(result6)));
+    var result8 = (v10['val'] * 1000) / v15['val'];
+    var result9 = ((Math.exp(result6)) - 1);
+    var result10 = (result4 * result7 + result8 * result9) * (Math.exp(result2));
+    var result11 = result1 * result3;
+    v17['val'] = result11 + result10;    
+}
+
+//ШАГ3
+function step4()//находим Оптимальная длина стального канала 
+{
+    var result1 = v7['val'] * 0.001;
+    var result2 = 4 * v1['val'] * v2['val'];
+    var result3 = result1 / result2;
+    var result4 = v6['val'] * 1000000;
+    var result5 = (v4['val'] * 1000) / v1['val'];
+    var result6 = result4 + result5;
+    var result7 =(v9['val'] / v3['val']);
+    var result8 = (Math.exp(result7));
+    var result9 = (v16['val'] - (v5['val'] * 1000000));
+    var result10 = result9 + (v5['val'] * 1000000) + result5;
+    var result11 = result6 / result10;
+    v18['val'] = result3 * Math.log(result11);
+}
+
+//ШАГ4
+function step5()//находим Оптимальная длина стального канала 
+{
+    var result1 = v7['val'] * 0.001;
+    var result2 = 4 * v14['val'] * v15['val'];
+    var result3 = result1 / result2;
+    var result4 = v13['val'] * 1000000;
+    var result5 = (v10['val'] * 1000) / v15['val'];
+    var result6 = result4 + result5;
+    var result7 =(v9['val'] / v12['val']);
+    var result8 = (Math.exp(result7));
+    var result9 = (v17['val'] - (v11['val'] * 1000000));
+    var result10 = result9 + (v11['val'] * 1000000) + result5;
+    var result11 = result6 / result10;
+    v19['val'] = result3 * Math.log(result11);
+}
+
+//ШАГ5
+function step6()//находим Производительность пресса
+{
+    v29['val'] = ( 3600 * v21['val'] ) /v22['val'];
+}
+
+//ШАГ6
+function step7() // Определяем энергоемкость процесса гранулирования
+{
+    v30['val'] = v20['val']/v29['val'];
+}
+
+//ШАГ7
+function step8() // Определяем часовую производительность матрицы по сухому помету
+{
+    var result = v29['val'];
+    
+    v31['val'] = result * (( 1 - v29['val']) / ( 1 - v23['val'])); 
+}
+
+//ШАГ8
+function step9() // Определяем минимальную толщину прессующего органа гранулятора
+{
+    var result1 = 9.84 * v25['val'] * (Math.pow(v26['val'], 2));
+    var result2 = 800; 
+    var result3 = v28['val'] / (v28['val'] - v27['val']);
+    v32['val'] = Math.sqrt((result1 / result2) * result3);
+}
+
+//ШАГ9
+function step10() // Определяем расчетный запас прочности стальной части гранулятора
+{
+    var result1 = 9.84 * v25['val'] * (Math.pow(v26['val'], 2));
+    var result2 = 8 * v32['val']; 
+    var result3 = v28['val'] / (v28['val'] - v27['val']);
+    v33['val'] = Math.sqrt((result1 / result2) * result3);
+}
+$('#calculate').click(
+    function(){
+
+        if(!set_fields()){
+		 message('Заполните все поля значениями из указанного диапазона', 'alert');
+		 return false;
+	  }
+
+       step2();
+       step3();
+       step4();
+       step5();
+       step6();
+       step7();
+       step8();
+       step9();       
+       step10();  
+        result('<p>' +
+                    output_format(v16) +
+                    output_format(v17) +
+                    output_format(v18) +
+                    output_format(v19) + 
+                    output_format(v29) +
+                    output_format(v30) +
+                    output_format(v31) +
+                    output_format(v32) +     
+                    output_format(v33) +                                     
+                    '<p>'
+					);
+        return false;
+    }
+);
